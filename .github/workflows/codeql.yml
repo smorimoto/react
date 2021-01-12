@@ -1,0 +1,29 @@
+name: CodeQL
+
+on:
+  pull_request:
+  push:
+  schedule:
+    - cron: 0 0 * * 0
+
+jobs:
+  codeql:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Initialize CodeQL
+        uses: github/codeql-action/init@v1
+        with:
+          languages: javascript
+
+      - name: Install packages
+        run: yarn --frozen-lockfile
+
+      - name: Run build
+        run: yarn build
+
+      - name: Perform CodeQL analysis
+        uses: github/codeql-action/analyze@v1
